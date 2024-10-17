@@ -6,8 +6,9 @@ try:
     import lzma
     from marshal import dumps, loads
     from colorama import Fore, Style
+    
 except ImportError:
-    os.system('pip install colorama')
+    os.system('pip install colorama zlib lzma marshal')
 
 class color:
     RED = Fore.RED + Style.BRIGHT
