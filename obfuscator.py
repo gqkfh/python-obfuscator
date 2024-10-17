@@ -1,12 +1,13 @@
 import os
 
 try:
-    import random, zlib, lzma
-    from marshal import dumps
+    import random
+    import zlib
+    import lzma
+    from marshal import dumps, loads
     from colorama import Fore, Style
-
-except:
-    os.system('pip install zlib lzma marshal')
+except ImportError:
+    os.system('pip install colorama')
 
 class color:
     RED = Fore.RED + Style.BRIGHT
@@ -18,7 +19,7 @@ def error(text):
     print_title()
 
 def ret():
-    choice = input(color.WHITE + '[*] Press ENTER to return the menu: ')
+    input(color.WHITE + '[*] Press ENTER to return the menu: ')
     print_title()
 
 def reset_color():
@@ -42,42 +43,34 @@ def print_title():
 print_title()
 
 choice = input(color.WHITE + '[*] Enter your word for obfuscate the text: ')
-file = input(color.WHITE + '[*] Drag or drop youir file here: ')
-junk = choice * 15
+file = input(color.WHITE + '[*] Drag or drop your file here: ')
+junk = '__' + choice + '__' * 15
 
-chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 def genvar():
-    var = ''
-    for i in range(10):
-        var += random.choice(chars)
-    return var
+    return ''.join(random.choice(chars) for _ in range(10))
 
 def compress(text):
-    ok = zlib.compress(text.encode())
-    ok = lzma.compress(ok)
-    return ok
+    return lzma.compress(zlib.compress(text.encode()))
 
 def encrypt1(text):
     src = compile(text, 'coduter', 'exec')
     ma = dumps(src)
     s = f'{junk}="{junk}";{junk}="{junk}";{junk}="{junk}";exec(loads({ma}));{junk}="{junk}";{junk}="{junk}"'
     compresse = compress(s)
-    oke = f"import zlib,lzma\nexec(zlib.decompress(lzma.decompress({compresse})))"
-    return oke
+    return f"import zlib,lzma\nexec(zlib.decompress(lzma.decompress({compresse})))"
 
 def encrypt2(text):
     sta = genvar()
-    code = text
-    s = compile(code, 'coduter', 'exec')
+    s = compile(text, 'coduter', 'exec')
     maa = dumps(s)
     stub2 = f'from marshal import loads;exec(loads({maa}));'
-    fin = f'{junk}="{junk}";{junk}="{junk}";{stub2}{junk}="{junk}";{junk}="{junk}";'
-    return fin
+    return f'{junk}="{junk}";{junk}="{junk}";{stub2}{junk}="{junk}";{junk}="{junk}";'
 
 if not os.path.isfile(file):
     error('File not found')
-    
+
 print(color.RED + '\n[*] Obfuscating...')
 
 with open(file, 'r', encoding='utf-8') as f:
@@ -88,8 +81,7 @@ code = encrypt2(code)
 
 print(color.WHITE + '[*] Done!')
 
-name = file.split('/')[-1]
-name = name.split('.')[0]
+name = os.path.splitext(os.path.basename(file))[0]
 with open(f'{name}-obf.py', 'w', encoding='utf-8') as f:
     f.write(code)
 
