@@ -1,2 +1,1 @@
-# python-obfuscator
-Python code obfuscator (undetectable)
+# Python Code Obfuscator
