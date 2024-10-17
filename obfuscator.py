@@ -18,7 +18,6 @@ def error(text):
     print_title()
 
 def ret():
-    print(color.WHITE + f'\n[*] Finished to write the {color.RED}results.txt{color.WHITE} file')
     choice = input(color.WHITE + '[*] Press ENTER to return the menu: ')
     print_title()
 
