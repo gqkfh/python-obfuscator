@@ -1,13 +1,11 @@
 import os
 
 try:
-    import random
-    import zlib
-    import lzma
+    import random, zlib, lzma
     from marshal import dumps, loads
     from colorama import Fore, Style
     
-except ImportError:
+except:
     os.system('pip install colorama zlib lzma marshal')
 
 class color:
