@@ -44,7 +44,8 @@ print_title()
 
 choice = input(color.WHITE + '[*] Enter your word for obfuscate the text: ')
 file = input(color.WHITE + '[*] Drag or drop your file here: ')
-junk = '__' + choice + '__' * 15
+choice_modif = '__' + choice + '__'
+junk = choice_modif * 15
 
 chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
