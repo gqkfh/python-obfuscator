@@ -13,6 +13,15 @@ class color:
     WHITE = Fore.WHITE + Style.BRIGHT
     RESET = Fore.RESET + Style.RESET_ALL
 
+def error(text):
+    print(color.WHITE + '\n[*] Error: ' + color.WHITE + text)
+    print_title()
+
+def ret():
+    print(color.WHITE + f'\n[*] Finished to write the {color.RED}results.txt{color.WHITE} file')
+    choice = input(color.WHITE + '[*] Press ENTER to return the menu: ')
+    print_title()
+
 def reset_color():
     print(color.RESET)
 
@@ -29,10 +38,13 @@ def print_title():
 ██║        ██║   ╚██████╔╝██████╔╝██║     
 ╚═╝        ╚═╝    ╚═════╝ ╚═════╝ ╚═╝    
 '''
+    print(color.RED + title)
 
-junk = "__skid__" * 15
+print_title()
 
-file = input('Drag or drop youir file here: ')
+choice = input(color.WHITE + '[*] Enter your word for obfuscate the text: ')
+file = input(color.WHITE + '[*] Drag or drop youir file here: ')
+junk = choice * 15
 
 chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
@@ -65,38 +77,23 @@ def encrypt2(text):
     return fin
 
 if not os.path.isfile(file):
-    print('File not found')
-    exit()
-print('\n')
-print('[+] encrypting ...')
+    error('File not found')
+    
+print(color.RED + '\n[*] Obfuscating...')
 
-# Modifier cette ligne pour utiliser l'encodage utf-8
 with open(file, 'r', encoding='utf-8') as f:
     code = f.read()
 
 code = encrypt1(code)
 code = encrypt2(code)
-print('[+] done')
-print('\n')
+
+print(color.WHITE + '[*] Done!')
+
 name = file.split('/')[-1]
 name = name.split('.')[0]
 with open(f'{name}-obf.py', 'w', encoding='utf-8') as f:
     f.write(code)
 
 os.system('cls' if os.name == 'nt' else 'clear')
-print(f'done your file is encrypted and saved as {name}-obf.py')
-print('\n')
-print('[+] thanks for using this tool')
-import time
-time.sleep(5)
-exit()
-
-Contraer
-obf (2) (1).py4 KB
-
-import base64
-
-def encode_file_to_base64(input_file, output_file):
-    """Read a Python file, encode its content to Base64, and write the encoded content to a new file."""
-    with open(input_file, 'rb') as f:
-        code = f.read()
+print(color.WHITE + f'\n[*] File obfuscated and saved as {color.RED}{name}-obf.py{color.WHITE}')
+ret()
